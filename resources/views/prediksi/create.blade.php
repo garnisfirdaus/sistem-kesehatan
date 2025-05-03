@@ -1,0 +1,79 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="py-8 bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold leading-7 text-primary-900 sm:text-3xl sm:truncate">
+                Prediksi Kesehatan
+            </h2>
+            <p class="mt-1 text-sm text-neutral-500">
+                Masukkan data untuk memprediksi status kesehatan menggunakan metode Naive Bayes
+            </p>
+        </div>
+
+        <div class="bg-white shadow-sm rounded-lg p-6 border border-neutral-200">
+            <form action="{{ route('prediksi.store') }}" method="POST">
+                @csrf
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-neutral-700">Nama</label>
+                        <input type="text" name="nama" id="nama" value="{{ old('nama') }}" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-neutral-300 rounded-md" required>
+                        @error('nama')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="umur" class="block text-sm font-medium text-neutral-700">Umur</label>
+                        <input type="number" name="umur" id="umur" value="{{ old('umur') }}" class="mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm border-neutral-300 rounded-md" required>
+                        @error('umur')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="gaya_hidup" class="block text-sm font-medium text-neutral-700">Gaya Hidup</label>
+                        <select name="gaya_hidup" id="gaya_hidup" class="mt-1 block w-full py-2 px-3 border border-neutral-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" required>
+                            <option value="">Pilih Gaya Hidup</option>
+                            <option value="Aktif" {{ old('gaya_hidup') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                            <option value="Sedentary" {{ old('gaya_hidup') == 'Sedentary' ? 'selected' : '' }}>Sedentary</option>
+                            <option value="Kurang Aktif" {{ old('gaya_hidup') == 'Kurang Aktif' ? 'selected' : '' }}>Kurang Aktif</option>
+                            <option value="Sehat" {{ old('gaya_hidup') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
+                        </select>
+                        @error('gaya_hidup')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="riwayat_penyakit" class="block text-sm font-medium text-neutral-700">Riwayat Penyakit</label>
+                        <select name="riwayat_penyakit" id="riwayat_penyakit" class="mt-1 block w-full py-2 px-3 border border-neutral-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" required>
+                            <option value="">Pilih Riwayat Penyakit</option>
+                            <option value="Tidak Ada" {{ old('riwayat_penyakit') == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
+                            <option value="Diabetes" {{ old('riwayat_penyakit') == 'Diabetes' ? 'selected' : '' }}>Diabetes</option>
+                            <option value="Hipertensi" {{ old('riwayat_penyakit') == 'Hipertensi' ? 'selected' : '' }}>Hipertensi</option>
+                            <option value="Jantung" {{ old('riwayat_penyakit') == 'Jantung' ? 'selected' : '' }}>Jantung</option>
+                            <option value="Asma" {{ old('riwayat_penyakit') == 'Asma' ? 'selected' : '' }}>Asma</option>
+                            <option value="Penyakit Ringan" {{ old('riwayat_penyakit') == 'Penyakit Ringan' ? 'selected' : '' }}>Penyakit Ringan</option>
+                        </select>
+                        @error('riwayat_penyakit')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <a href="{{ route('dashboard') }}" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 mr-3">
+                        Batal
+                    </a>
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 mr-3">
+                        Prediksi Kesehatan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
